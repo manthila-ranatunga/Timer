@@ -2,8 +2,6 @@ import bagel.DrawOptions;
 import bagel.Font;
 import bagel.util.Colour;
 import bagel.util.Point;
-import java.io.*;
-
 
 public class Clock {
     private final int NUMBER;
@@ -12,8 +10,10 @@ public class Clock {
     private int hrs;
     private int mins;
     private int secs;
+    private boolean finished = false;
 
-    int counter = 0;
+    int clkCounter = 0;
+    int soundCounter = 0;
 
     private DrawOptions drawOptions = new DrawOptions();
     private final Colour WHITE = new Colour(255, 255, 255);
@@ -31,23 +31,31 @@ public class Clock {
     }
 
     public void update() {
-        Font FONT = new Font("res/IniyaDisplay.otf", 48);
+        Font FONT = new Font("res/Profontwindows.ttf", 48);
 
-        String string = "Timer " + NUMBER + "\n" + hrs + " : " + mins + " : " + secs;
+        String string = "Timer " + NUMBER + "\n" + hrs + ":" + mins + ":" + secs;
 
         FONT.drawString(string, position.x, position.y, drawOptions);
     }
 
     public void tick() {
         if (secs == 0 && mins == 0 && hrs == 0) {
+            if (!finished) {
+//                playAlarm();
+                Sound.play("res/alarm.wav");
+                finished = true;
+            }
             return;
         }
         if (secs != -1) {
-            if (counter == 60) {
+            if (clkCounter
+                    == 60) {
                 secs--;
-                counter = 0;
+                clkCounter
+                        = 0;
             }
-            counter++;
+            clkCounter
+                    ++;
         } else if (mins != -1) {
             secs = 59;
             if (mins != 0) {
@@ -63,17 +71,20 @@ public class Clock {
         }
     }
 
-//    private void playSound() throws FileNotFoundException {
-//        // open the sound file as a Java input stream
-//        String gongFile = "res/alarm.wav";
-//        InputStream in = new FileInputStream(gongFile);
-//
-//        // create an audiostream from the inputstream
-//        AudioStream audioStream = new AudioStream(in);
-//
-//        // play the audio clip with the audioplayer class
-//        AudioPlayer.player.start(audioStream);
-//    }
+    private boolean soundCount() {
+        if (soundCounter == 60) {
+            soundCounter = 0;
+            return true;
+        }
+        soundCounter++;
+        return false;
+    }
+
+    private void playAlarm() {
+        if (soundCount()) {
+            Sound.play("res/alarm.wav");
+        }
+    }
 
     public int inSecs() {
         return hrs * 3600 + mins * 60 + secs;

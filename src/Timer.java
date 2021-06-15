@@ -5,6 +5,23 @@ Timer 1.0 by Manthila Ranatunga
 Started 10/05/2021
  */
 
+/*
+Free Fonts
+https://www.fontspace.com/category/java
+   Free Sounds
+https://freesound.org/browse/
+ */
+
+
+/*
+TO DO:
+- Exceptions for invalid timer inputs
+- Remove timers
+- Dynamic timer adding/removing
+- More convenient way of adding timers - eg: via windows run & console inputs
+- GUI
+ */
+
 import bagel.*;
 import bagel.util.Colour;
 import bagel.util.Point;
@@ -32,11 +49,19 @@ public class Timer extends AbstractGame {
     public Timer() {
         super(800, 600, "Timer 1.0 by Manthila Ranatunga");
 
-        inputs.add("0 0 10");
-        inputs.add("0 0 20");
-        inputs.add("0 1 5");
-        inputs.add("0 2 30");
-        inputs.add("1 0 5");
+        inputs.add("3 25 0");
+        inputs.add("3 20 00");
+        inputs.add("3 10 00");
+        inputs.add("2 55 00");
+        inputs.add("2 510 00");
+
+
+
+
+
+
+
+
 
 
         for (String input : inputs) {
@@ -48,7 +73,7 @@ public class Timer extends AbstractGame {
 
 
     public void drawString(String string, int size, Point position) {
-        Font FONT = new Font("res/IniyaDisplay.otf", size);
+        Font FONT = new Font("res/Profontwindows.ttf", size);
         FONT.drawString(string, position.x, position.y, drawOptions);
     }
 
