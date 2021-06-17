@@ -50,10 +50,11 @@ public class Timer extends AbstractGame {
         super(800, 600, "Timer 1.0 by Manthila Ranatunga");
 
         inputs.add("3 25 0");
-        inputs.add("3 20 00");
-        inputs.add("3 10 00");
-        inputs.add("2 55 00");
-        inputs.add("2 510 00");
+        inputs.add("3 20 0");
+        inputs.add("3 10 0");
+        inputs.add("2 55 0");
+        inputs.add("2 00 0");
+        inputs.add("1 0 0");
 
 
 
@@ -126,7 +127,7 @@ public class Timer extends AbstractGame {
 //        takeInput();
         for (Clock clock : clocks) {
             clock.update();
-            clock.tick();
+            clock.tick(input);
         }
     }
 

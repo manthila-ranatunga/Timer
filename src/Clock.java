@@ -1,11 +1,14 @@
 import bagel.DrawOptions;
 import bagel.Font;
+import bagel.Input;
+import bagel.Keys;
 import bagel.util.Colour;
 import bagel.util.Point;
 
 public class Clock {
     private final int NUMBER;
     private static int count = 1;
+    private boolean pause = false;
 
     private int hrs;
     private int mins;
@@ -38,7 +41,12 @@ public class Clock {
         FONT.drawString(string, position.x, position.y, drawOptions);
     }
 
-    public void tick() {
+    public void tick(Input input) {
+        pause(input);
+        if (pause) {
+            return;
+        }
+
         if (secs == 0 && mins == 0 && hrs == 0) {
             if (!finished) {
 //                playAlarm();
@@ -63,7 +71,6 @@ public class Clock {
 
             } else if (hrs != -1) {
                 mins = 59;
-//                secs = 59;
                 if (hrs != 0) {
                     hrs--;
                 }
@@ -78,6 +85,12 @@ public class Clock {
         }
         soundCounter++;
         return false;
+    }
+
+    private void pause(Input input) {
+        if (input.wasPressed(Keys.P)) {
+            pause = !pause;
+        }
     }
 
     private void playAlarm() {
